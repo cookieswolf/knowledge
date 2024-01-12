@@ -16,6 +16,7 @@ class InternLM_LLM(LLM):
         # 从本地初始化模型
         super().__init__()
         print("loading model...")
+        print(model_path)
         self.tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
         self.model = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True).to(torch.bfloat16).cuda()
         self.model = self.model.eval()
