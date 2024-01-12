@@ -12,7 +12,7 @@ import torch
 from modelscope import snapshot_download, AutoModel, AutoTokenizer
 import os
 
-#https://zhuanlan.zhihu.com/p/676719586
+ 
 def init():
     model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm-chat-7b'
                                   , cache_dir='./', revision='v1.0.3')
