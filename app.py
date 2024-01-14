@@ -1,28 +1,22 @@
-__import__('pysqlite3')
-import sys
-sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
-
-# 导入必要的库
-import gradio as gr
 from langchain.vectorstores import Chroma
 from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 from LLM import InternLM_LLM
 from langchain.prompts import PromptTemplate
-import torch
-from modelscope import snapshot_download, AutoModel, AutoTokenizer
+from langchain.chains import RetrievalQA
+import gradio as gr
+import pysqlite3
+import sys
+sys.modules["sqlite3"] = sys.modules.pop("pysqlite3")
 import os
+# 设置环境变量
+os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
+# 下载模型
+os.system('huggingface-cli download --resume-download BAAI/bge-base-zh --local-dir /home/xlab-app-center/model/bge-base-zh')
+# 将模型导入
+from openxlab.model import download
+download(model_repo='OpenLMLab/InternLM-chat-7b', output='/home/xlab-app-center/model/InternLM-chat-7b')
 
  
-def init():
-    # model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm-chat-7b', cache_dir='./', revision='v1.0.3')
-    os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
-    # 下载模型
-    os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir /home/xlab-app-center/model/sentence-transformer')
-
-    # 将模型导入
-    from openxlab.model import download
-    download(model_repo='OpenLMLab/InternLM-chat-7b', output='/home/xlab-app-center/model/InternLM-chat-7b')
-
 def load_chain():
     # 加载问答链
     # 定义 Embeddings
@@ -63,7 +57,7 @@ def load_chain():
 
 class QA():
    
-    init()
+     
     def __init__(self):
         self.chain = load_chain()
 
@@ -80,7 +74,6 @@ class QA():
 
 
 model_qa = QA()
-
 block = gr.Blocks()
 with block as demo:
     with gr.Row(equal_height=True):   
