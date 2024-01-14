@@ -20,7 +20,7 @@ download(model_repo='OpenLMLab/InternLM-chat-7b', output='/home/xlab-app-center/
 def load_chain():
     # 加载问答链
     # 定义 Embeddings
-    embeddings = HuggingFaceEmbeddings(model_name="/home/xlab-app-center/model/sentence-transformer")
+    embeddings = HuggingFaceEmbeddings(model_name="/home/xlab-app-center/model/bge-base-zh")
 
     # 向量数据库持久化路径
     persist_directory = 'database/vectordb/chroma'
