@@ -13,9 +13,8 @@ os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 # 下载模型
 os.system('huggingface-cli download --resume-download BAAI/bge-base-zh --local-dir /home/xlab-app-center/model/bge-base-zh')
 # 将模型导入
-from openxlab.model import download
-download(model_repo='OpenLMLab/InternLM-chat-7b', output='/home/xlab-app-center/model/InternLM-chat-7b')
-
+# download(model_repo='OpenLMLab/InternLM-chat-7b', output='/home/xlab-app-center/model/InternLM-chat-7b')
+os.system('huggingface-cli download --resume-download internlm/internlm-chat-7b --local-dir /home/xlab-app-center/model/internlm-chat-7b')
  
 def load_chain():
     # 加载问答链
