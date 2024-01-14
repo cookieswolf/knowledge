@@ -14,17 +14,19 @@ import os
 
  
 def init():
-    model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm-chat-7b'
-                                  , cache_dir='./', revision='v1.0.3')
+    # model_dir = snapshot_download('Shanghai_AI_Laboratory/internlm-chat-7b', cache_dir='./', revision='v1.0.3')
     os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
     # 下载模型
-    os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir sentence-transformer')
+    os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir /home/xlab-app-center/model/sentence-transformer')
 
+    # 将模型导入
+    from openxlab.model import download
+    download(model_repo='OpenLMLab/InternLM-chat-7b', output='/home/xlab-app-center/model/InternLM-chat-7b')
 
 def load_chain():
     # 加载问答链
     # 定义 Embeddings
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformer")
+    embeddings = HuggingFaceEmbeddings(model_name="/home/xlab-app-center/model/sentence-transformer")
 
     # 向量数据库持久化路径
     persist_directory = 'database/vectordb/chroma'
@@ -35,7 +37,7 @@ def load_chain():
         embedding_function=embeddings
     )
 
-    llm = InternLM_LLM(model_path = "Shanghai_AI_Laboratory/internlm-chat-7b")
+    llm = InternLM_LLM(model_path = "/home/xlab-app-center/model/internlm-chat-7b")
 
     template = """使用以下上下文来回答用户的问题。如果你不知道答案，就说你不知道。总是使用中文回答。
     问题: {question}
