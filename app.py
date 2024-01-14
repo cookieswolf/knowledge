@@ -11,7 +11,7 @@ import os
 # 设置环境变量
 os.environ['HF_ENDPOINT'] = 'https://hf-mirror.com'
 # 下载模型
-os.system('huggingface-cli download --resume-download BAAI/bge-base-zh --local-dir /home/xlab-app-center/model/bge-base-zh')
+os.system('huggingface-cli download --resume-download sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2 --local-dir /home/xlab-app-center/model/sentence-transformer')
 # 将模型导入
 # download(model_repo='OpenLMLab/InternLM-chat-7b', output='/home/xlab-app-center/model/InternLM-chat-7b')
 os.system('huggingface-cli download --resume-download internlm/internlm-chat-7b --local-dir /home/xlab-app-center/model/internlm-chat-7b')
@@ -19,7 +19,7 @@ os.system('huggingface-cli download --resume-download internlm/internlm-chat-7b 
 def load_chain():
     # 加载问答链
     # 定义 Embeddings
-    embeddings = HuggingFaceEmbeddings(model_name="/home/xlab-app-center/model/bge-base-zh")
+    embeddings = HuggingFaceEmbeddings(model_name="/home/xlab-app-center/model/sentence-transformer")
 
     # 向量数据库持久化路径
     persist_directory = 'database/vectordb/chroma'
