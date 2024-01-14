@@ -84,19 +84,22 @@ with block as demo:
         with gr.Column(scale=4):
             chatbot = gr.Chatbot(height=450, show_copy_button=True)
             # 创建一个文本框组件，用于输入 prompt。
-            msg = gr.Textbox(label="Prompt")
-
+            # msg = gr.Textbox(label="Prompt")
+            examples = [
+                    "llava是什么？",              
+            ]
+            msg = gr.Dropdown(choices=examples, label="问题（可选示例）", allow_custom_value=True)
             with gr.Row():
                 # 创建提交按钮。
-                db_wo_his_btn = gr.Button("Chat")
+                db_wo_his_btn = gr.Button("对话")
             with gr.Row():
                
                 clear = gr.ClearButton(
-                    components=[chatbot], value="Clear console")
+                    components=[chatbot], value="清除")
                 
         # 设置按钮的点击事件。当点击时，调用上面定义的 qa_chain_self_answer 函数，并传入用户的消息和聊天历史记录，然后更新文本框和聊天机器人组件。
         db_wo_his_btn.click(model_qa.qa_chain_self_answer, inputs=[msg, chatbot], outputs=[msg, chatbot])
-    
+       
 gr.close_all()
  
 demo.launch()
